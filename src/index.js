@@ -20,7 +20,6 @@ app.use(express.json());
 //     });
 // });
 
-
 //Adding student using AsyncAwait
 app.post("/students", async (req, res) => {
   try {
@@ -33,7 +32,14 @@ app.post("/students", async (req, res) => {
   }
 });
 
-
+app.get("/students", async (req, res) => {
+  try {
+    const studentsData = await Student.find();
+    res.send(studentsData);
+  } catch (err) {
+    res.send("Something went wrong in studentsData " + err);
+  }
+});
 
 app.get("/", (req, res) => {
   res.send("Hello from expressjs server ");
