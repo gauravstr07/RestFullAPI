@@ -57,16 +57,27 @@ app.get("/students/:id", async (req, res) => {
   }
 });
 
+
+//Update Student by using Id
+app.patch("/students/:id", async (req, res) => {
+  try {
+      const _id = req.params.id
+      const updateStudent = await Student.findByIdAndUpdate(_id, req.body);
+      res.send(updateStudent);
+  } catch (err) {
+    res.send("Something went wrong in updateStudent " + err);
+  }
+})
+
 //Delete a Student by Id
 app.delete("/students/:id", async (req, res) => {
   try {
-   const deleteStudent = await Student.findByIdAndDelete(req.params.id);
-   if(!req.params.id){
-    return res.status(404).send("Id Not Found");
-   }
+    const deleteStudent = await Student.findByIdAndDelete(req.params.id);
+    if (!req.params.id) {
+      return res.status(404).send("Id Not Found");
+    }
 
-   res.send(deleteStudent);
-
+    res.send(deleteStudent);
   } catch (err) {
     res.send("Something went wrong in deleteStudent " + err);
   }
