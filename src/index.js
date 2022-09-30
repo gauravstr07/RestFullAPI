@@ -32,12 +32,29 @@ app.post("/students", async (req, res) => {
   }
 });
 
+//Getting Data from MongoDB
 app.get("/students", async (req, res) => {
   try {
     const studentsData = await Student.find();
     res.send(studentsData);
   } catch (err) {
     res.send("Something went wrong in studentsData " + err);
+  }
+});
+
+//Getting the indivisible student data using id
+app.get("/students/:id", async (req, res) => {
+  try {
+      const _id = req.params.id;
+     const studentData = await Student.findById(_id);
+     if(!studentData){
+      return res.status(404).send("Student Data Not Found 🙌")
+     }else{
+      res.send(studentData);
+     }
+    
+  } catch (err) {
+    res.send("Something went wrong in _id " + err);
   }
 });
 
