@@ -45,16 +45,30 @@ app.get("/students", async (req, res) => {
 //Getting the indivisible student data using id
 app.get("/students/:id", async (req, res) => {
   try {
-      const _id = req.params.id;
-     const studentData = await Student.findById(_id);
-     if(!studentData){
-      return res.status(404).send("Student Data Not Found 🙌")
-     }else{
+    const _id = req.params.id;
+    const studentData = await Student.findById(_id);
+    if (!studentData) {
+      return res.status(404).send("Student Data Not Found 🙌");
+    } else {
       res.send(studentData);
-     }
-    
+    }
   } catch (err) {
     res.send("Something went wrong in _id " + err);
+  }
+});
+
+//Delete a Student by Id
+app.delete("/students/:id", async (req, res) => {
+  try {
+   const deleteStudent = await Student.findByIdAndDelete(req.params.id);
+   if(!req.params.id){
+    return res.status(404).send("Id Not Found");
+   }
+
+   res.send(deleteStudent);
+
+  } catch (err) {
+    res.send("Something went wrong in deleteStudent " + err);
   }
 });
 
